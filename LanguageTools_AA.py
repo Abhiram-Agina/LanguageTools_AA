@@ -17,7 +17,7 @@ r = sr.Recognizer()
 st.title("Language Learning Tools")
 
 st.sidebar.image('images/AbhiramAgina.png', use_column_width=True)
-st.sidebar.markdown('I am a Junior at Oak Park High School in Oak Park, CA. My friends and I learn Foreign Languages, so I built this App to make things easier. My goal is to bring all Language Learning Tools under one roof. Please check it out.')
+st.sidebar.markdown('I am Abhiram Agina, a Junior at Oak Park High School in Oak Park, CA. My friends and I learn Foreign Languages, so I built this App to make things easier. My goal is to bring all Language Learning Tools under one roof. Please check it out.')
 
 nav = st.sidebar.radio("Navigation",["Image-to-Text","Text-Translate","Text-to-Speech", "Speech-to-Text", "Chat-with-Eliza"])
 st.image('images/WorldLanguages.jpg', width=400)
