@@ -93,8 +93,8 @@ if nav == "Speech-to-Text":
         audio_bytes = uploadedAudioFile.read()
         st.audio(audio_bytes,format='audio/wav') #this will let user play the user-uploaded audio file
         
-        sound = uploadedAudioFile.name
-        with sr.AudioFile(sound) as source:
+        #sound = uploadedAudioFile.name
+        with sr.AudioFile(uploadedAudioFile) as source:
             audio_data = r.record(source)
             text_src = r.recognize_google(audio_data, language=src) # 'es-ES'
             st.header("Transcribed Text")
