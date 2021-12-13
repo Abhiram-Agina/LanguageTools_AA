@@ -2,7 +2,7 @@ streamlit
 easyocr
 Pillow
 numpy
-SpeechRecognition
+SpeechRecognition==3.8.1
 mtranslate
 gtts
 regex
