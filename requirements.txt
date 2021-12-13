@@ -1,0 +1,8 @@
+streamlit
+easyocr
+Pillow
+numpy
+SpeechRecognition
+mtranslate
+gTTS
+regex
