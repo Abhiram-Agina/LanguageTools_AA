@@ -4,5 +4,8 @@ Pillow
 numpy
 SpeechRecognition==2.2.0
 mtranslate
-gTTS
+gtts
 regex
+torch
+torchvision
+googletrans
