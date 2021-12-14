@@ -9,7 +9,6 @@ from gtts import gTTS #Text to Speech
 import re #pip install regex #for handling regular expressions #String Manipulation
 import random 
 import sys
-import soundfile
 
 reader = easyocr.Reader(['en', 'es', 'de', 'fr']) # need to run only once to load model into memory
 
