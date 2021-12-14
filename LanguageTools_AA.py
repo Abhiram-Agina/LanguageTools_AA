@@ -121,7 +121,8 @@ if nav == "Speech-to-Text":
         st.audio(audio_bytes,format='audio/mp3')        
                 
 if nav == "Chat-with-Eliza":
-    st.write("DISCLAIMER: Please note that the automated text/translation may result in unexpected outcomes. If EIZA misbehaves, let me know.")
+    st.write("DISCLAIMER: ")
+    st.write("Please note that the automated text/translation may result in unexpected outcomes. If Eliza misbehaves, let me know.")
     # reflejos sobre el sujeto
     reflections = {
         "estoy": "estas",
