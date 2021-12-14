@@ -9,6 +9,7 @@ from gtts import gTTS #Text to Speech
 import re #pip install regex #for handling regular expressions #String Manipulation
 import random 
 import sys
+import soundfile
 
 reader = easyocr.Reader(['en', 'es', 'de', 'fr']) # need to run only once to load model into memory
 
@@ -16,11 +17,11 @@ r = sr.Recognizer()
 
 st.title("Language Learning Tools")
 
-st.sidebar.image('images/AbhiramAgina.png', use_column_width=True)
-st.sidebar.markdown('I am Abhiram Agina, a Junior at Oak Park High School in Oak Park, CA. My friends and I learn Foreign Languages, so I built this App to make things easier. My goal is to bring all Language Learning Tools under one roof. Please check it out.')
+st.sidebar.image('images\AbhiramAgina.png', use_column_width=True)
+st.sidebar.markdown('I am a Junior at Oak Park High School in Oak Park, CA. My friends and I learn Foreign Languages, so I built this App to make things easier. My goal is to bring all Language Learning Tools under one roof. Please check it out.')
 
 nav = st.sidebar.radio("Navigation",["Image-to-Text","Text-Translate","Text-to-Speech", "Speech-to-Text", "Chat-with-Eliza"])
-st.image('images/WorldLanguages.jpg', width=400)
+st.image('images\WorldLanguages.jpg', width=400)
 
 # Language ISO Codes used by Python: https://cloud.google.com/translate/docs/languages
 src = st.sidebar.selectbox('from', ['en', 'es', 'de', 'fr', 'zh-CN', 'zh-TW'])
@@ -87,32 +88,39 @@ if nav == "Speech-to-Text":
     st.title("Convert Audio to Text")
     uploadedAudioFile = st.file_uploader(label = "Upload your audio file here", type=['wav'])
     st.write("Note: This accepts .wav files only. Convert from MP3 to WAV using https://cloudconvert.com/mp3-to-wav")
-
+   
     if uploadedAudioFile is not None:
-        st.header("Uploaded Audio: Original")
         audio_bytes = uploadedAudioFile.read()
         st.audio(audio_bytes,format='audio/wav') #this will let user play the user-uploaded audio file
         
+        with open(uploadedAudioFile.name,"wb") as f:
+            f.write(uploadedAudioFile.getbuffer())
+        
         sound = uploadedAudioFile.name
+        f = open("sourcefile.txt","w+")
         with sr.AudioFile(sound) as source:
             audio_data = r.record(source)
-            text_src = r.recognize_google(audio_data, language=src) # 'es-ES'
-            st.header("Transcribed Text")
-            st.write(text_src)
+            f.write(r.recognize_google(audio_data, language='es-ES'))
+            f.close()
+        
+        st.header("Transcribed Text")
+        f = open("sourcefile.txt","r")    
+        st.write(f.read())
+        f.close()
         
         st.header("Translated Text")
-        text_tgt = translate(text_src,tgt)
+        f = open("sourcefile.txt","r")
+        text_tgt = translate(f.read(),src)
         st.write(text_tgt)
-        
+            
         st.header("Text-to-Speech Conversion: Translated")  
         st.write('Listen to source text in the target language')
-        es_tts=gTTS(text_tgt, lang=tgt) #target language here is Spanish accent of the OCR Text       
+        es_tts=gTTS(text_tgt, lang=tgt) #target language here is target accent of the OCR Text       
         es_tts.save('transT.mp3') #convert the original text into an audio file
         audio_file = open('transT.mp3', 'rb')
         audio_bytes = audio_file.read()
-        st.audio(audio_bytes,format='audio/mp3')
-        
-        
+        st.audio(audio_bytes,format='audio/mp3')        
+                
 if nav == "Chat-with-Eliza":
     st.write("DISCLAIMER: Please note that the automated text/translation may result in unexpected outcomes. If EIZA misbehaves, let me know.")
     # reflejos sobre el sujeto
@@ -356,7 +364,7 @@ if nav == "Chat-with-Eliza":
                 response = random.choice(responses)
                 return response.format(*[reflect(g) for g in match.groups()])
 
-    st.image('images/Eliza.gif')
+    st.image('images\Eliza.gif')
     st.write("To learn more about me: https://www.youtube.com/watch?v=RMK9AphfLco") 
     #st.write("Hola ¿Cómo te sientes hoy?")
 
